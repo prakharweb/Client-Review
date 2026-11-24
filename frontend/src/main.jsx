@@ -475,90 +475,89 @@ function App() {
                     Write or view a Google review
                   </a>
 
-                  <div className="form-divider">
-                    <span>SHARE PRIVATE FEEDBACK</span>
-                  </div>
-
-                  <form
-                    onSubmit={submit}
-                    className="feedback-form"
-                  >
-
-                    <div className="field">
-                      <label>Full name *</label>
-
-                      <input
-                        name="name"
-                        placeholder="Your name"
-                        minLength="2"
-                        maxLength="160"
-                        required
-                      />
-                    </div>
-
-                    <div className="field">
-                      <label>Hospital / Company</label>
-
-                      <input
-                        name="organization"
-                        placeholder="Organization name"
-                        maxLength="200"
-                      />
-                    </div>
-
-                    <div className="two">
-
-                      <div className="field">
-                        <label>Email address *</label>
-
-                        <input
-                          name="email"
-                          type="email"
-                          placeholder="you@example.com"
-                          required
-                        />
-                      </div>
-
-                      <div className="field">
-                        <label>Mobile number</label>
-
-                        <input
-                          name="phone"
-                          type="tel"
-                          placeholder="+91"
-                          maxLength="40"
-                        />
-                      </div>
-
-                    </div>
-
-                    <div className="field">
-                      <label>Your feedback *</label>
-
-                      <textarea
-                        name="message"
-                        placeholder="Tell us about your experience..."
-                        minLength="3"
-                        maxLength="5000"
-                        rows="4"
-                        required
-                      />
-                    </div>
-
+                  {rating >= 4 ? (
                     <button
+                      type="button"
                       className="primary full"
-                      disabled={busy}
+                      onClick={() => window.location.assign(googleUrl)}
                     >
-                      {busy
-                        ? "Submitting..."
-                        : "Submit feedback"}
+                      Submit
                     </button>
+                  ) : (
+                    <>
+                      <div className="form-divider">
+                        <span>SHARE PRIVATE FEEDBACK</span>
+                      </div>
 
-                    {error && (
-                      <p className="error">{error}</p>
-                    )}
+                      <form
+                        onSubmit={submit}
+                        className="feedback-form"
+                      >
+                        <div className="field">
+                          <label>Full name *</label>
+                          <input
+                            name="name"
+                            placeholder="Your name"
+                            minLength="2"
+                            maxLength="160"
+                            required
+                          />
+                        </div>
 
-                  </form>
+                        <div className="field">
+                          <label>Hospital / Company</label>
+                          <input
+                            name="organization"
+                            placeholder="Organization name"
+                            maxLength="200"
+                          />
+                        </div>
+
+                        <div className="two">
+                          <div className="field">
+                            <label>Email address *</label>
+                            <input
+                              name="email"
+                              type="email"
+                              placeholder="you@example.com"
+                              required
+                            />
+                          </div>
+
+                          <div className="field">
+                            <label>Mobile number</label>
+                            <input
+                              name="phone"
+                              type="tel"
+                              placeholder="+91"
+                              maxLength="40"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="field">
+                          <label>Your feedback *</label>
+                          <textarea
+                            name="message"
+                            placeholder="Tell us about your experience..."
+                            minLength="3"
+                            maxLength="5000"
+                            rows="4"
+                            required
+                          />
+                        </div>
+
+                        <button
+                          className="primary full"
+                          disabled={busy}
+                        >
+                          {busy ? "Submitting..." : "Submit feedback"}
+                        </button>
+
+                        {error && <p className="error">{error}</p>}
+                      </form>
+                    </>
+                  )}
                 </div>
               )}
             </>
