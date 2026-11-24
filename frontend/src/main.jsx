@@ -55,6 +55,7 @@ async function apiRequest(path, options = {}) {
 
 function App() {
   const [rating, setRating] = useState(0);
+  const [showPrivateForm, setShowPrivateForm] = useState(false);
   const [googleUrl, setGoogleUrl] = useState(GOOGLE_URL_FALLBACK);
   const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -400,7 +401,7 @@ function App() {
                         ? "star active"
                         : "star"
                     }
-                    onClick={() => setRating(n)}
+                    onClick={() => { setRating(n); setShowPrivateForm(false); }}
                   >
                     <Star
                       size={34}
@@ -455,14 +456,26 @@ function App() {
                     Write or view a Google review
                   </a>
 
-                  <div className="form-divider">
-                    <span>SHARE PRIVATE FEEDBACK</span>
-                  </div>
-
-                  <form
-                    onSubmit={submit}
-                    className="feedback-form"
+                  <button
+                    type="button"
+                    className="google-button"
+                    onClick={() => setShowPrivateForm(value => !value)}
+                    aria-expanded={showPrivateForm}
                   >
+                    <MessageSquare size={17} />
+                    {showPrivateForm ? "Hide private feedback form" : "Share private feedback"}
+                  </button>
+
+                  {showPrivateForm && (
+                    <>
+                      <div className="form-divider">
+                        <span>SHARE PRIVATE FEEDBACK</span>
+                      </div>
+
+                      <form
+                        onSubmit={submit}
+                        className="feedback-form"
+                      >
 
                     <div className="field">
                       <label>Full name *</label>
@@ -538,7 +551,9 @@ function App() {
                       <p className="error">{error}</p>
                     )}
 
-                  </form>
+                      </form>
+                    </>
+                  )}
                 </div>
               )}
             </>
