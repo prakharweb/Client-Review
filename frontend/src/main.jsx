@@ -438,8 +438,8 @@ function App() {
                       <b>Share your honest experience</b>
 
                       <p className="muted">
-                        You can write a public Google review or send private
-                        feedback to our team. Both choices are available
+                        Submit to open our Google review page, or choose
+                        private feedback below. Both options are available
                         for every rating.
                       </p>
                     </div>
@@ -453,7 +453,7 @@ function App() {
                     rel="noopener noreferrer"
                   >
                     <ExternalLink size={17} />
-                    Write or view a Google review
+                    Submit
                   </a>
 
                   <button
