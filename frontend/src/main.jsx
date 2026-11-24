@@ -165,8 +165,9 @@ function App() {
 
       console.log("Feedback submitted:", data);
 
-      // After private feedback is saved and the email notification is attempted,
-      // continue to the same Google review page offered for every rating.
+      // After feedback is saved and the email notification attempt completes,
+      // open the Google review page. The Google review option remains available
+      // for every rating.
       window.location.assign(googleUrl);
 
       if (!data.email_sent) {
@@ -425,20 +426,45 @@ function App() {
                       "We're sorry to hear that",
                       "We'll work to improve",
                       "Thanks for letting us know",
-               {rating > 0 && (
-                <div className="next-step">
-                  <div className="google-prompt">
-                    <div className="google-mark">G</div>
-                    <div>
-                      <b>Share your honest experience</b>
-                      <p className="muted">
-                        You can leave a Google review. For additional private
-                        feedback, use the form when available.
-                      </p>
-                    </div>
-                  </div>
+                      "Glad you had a good experience!",
+                      "Wonderful! Thank you!"
+                    ][rating]
+                  : "Tap a star to rate us"}
+              </div>
 
-                  {/* Google review is available for every rating */}
+              {rating > 0 && (
+                <div className="next-step">
+
+                  {rating >= 4 ? (
+                    <div className="google-prompt">
+                      <div className="google-mark">G</div>
+
+                      <div>
+                        <b>
+                          Would you share your experience on Google?
+                        </b>
+
+                        <p className="muted">
+                          Your honest public review helps others
+                          discover us.
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="private-prompt">
+                      <MessageSquare size={20} />
+
+                      <div>
+                        <b>Tell us how we can do better</b>
+
+                        <p className="muted">
+                          Your feedback goes directly to our team.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Google review link available to all customers */}
                   <a
                     className="google-button"
                     href={googleUrl}
@@ -446,89 +472,87 @@ function App() {
                     rel="noopener noreferrer"
                   >
                     <ExternalLink size={17} />
-                    {rating >= 4 ? "Submit" : "Open Google Review"}
+                    Write or view a Google review
                   </a>
 
-                  {/* Private feedback form for ratings 1–3; successful submission
-                      saves feedback, triggers the existing Brevo notification,
-                      then opens the same Google review page. */}
-                  {rating <= 3 && (
-                    <>
-                      <div className="form-divider">
-                        <span>SHARE PRIVATE FEEDBACK</span>
+                  <div className="form-divider">
+                    <span>SHARE PRIVATE FEEDBACK</span>
+                  </div>
+
+                  <form
+                    onSubmit={submit}
+                    className="feedback-form"
+                  >
+
+                    <div className="field">
+                      <label>Full name *</label>
+
+                      <input
+                        name="name"
+                        placeholder="Your name"
+                        minLength="2"
+                        maxLength="160"
+                        required
+                      />
+                    </div>
+
+                    <div className="field">
+                      <label>Hospital / Company</label>
+
+                      <input
+                        name="organization"
+                        placeholder="Organization name"
+                        maxLength="200"
+                      />
+                    </div>
+
+                    <div className="two">
+
+                      <div className="field">
+                        <label>Email address *</label>
+
+                        <input
+                          name="email"
+                          type="email"
+                          placeholder="you@example.com"
+                          required
+                        />
                       </div>
 
-                      <form
-                        onSubmit={submit}
-                        className="feedback-form"
-                      >
-                        <div className="field">
-                          <label>Full name *</label>
-                          <input
-                            name="name"
-                            placeholder="Your name"
-                            minLength="2"
-                            maxLength="160"
-                            required
-                          />
-                        </div>
+                      <div className="field">
+                        <label>Mobile number</label>
 
-                        <div className="field">
-                          <label>Hospital / Company</label>
-                          <input
-                            name="organization"
-                            placeholder="Organization name"
-                            maxLength="200"
-                          />
-                        </div>
+                        <input
+                          name="phone"
+                          type="tel"
+                          placeholder="+91"
+                          maxLength="40"
+                        />
+                      </div>
 
-                        <div className="two">
-                          <div className="field">
-                            <label>Email address *</label>
-                            <input
-                              name="email"
-                              type="email"
-                              placeholder="you@example.com"
-                              required
-                            />
-                          </div>
+                    </div>
 
-                          <div className="field">
-                            <label>Mobile number</label>
-                            <input
-                              name="phone"
-                              type="tel"
-                              placeholder="+91"
-                              maxLength="40"
-                            />
-                          </div>
-                        </div>
+                    <div className="field">
+                      <label>Your feedback *</label>
 
-                        <div className="field">
-                          <label>Your feedback *</label>
-                          <textarea
-                            name="message"
-                            placeholder="Tell us about your experience..."
-                            minLength="3"
-                            maxLength="5000"
-                            rows="4"
-                            required
-                          />
-                        </div>
+                      <textarea
+                        name="message"
+                        placeholder="Tell us about your experience..."
+                        minLength="3"
+                        maxLength="5000"
+                        rows="4"
+                        required
+                      />
+                    </div>
 
-                        <button
-                          className="primary full"
-                          disabled={busy}
-                        >
-                          {busy ? "Submitting..." : "Submit feedback"}
-                        </button>
-
-                        {error && <p className="error">{error}</p>}
-                      </form>
-                    </>
-                  )}
-                </div>
-              )}            </button>
+                    <button
+                      className="primary full"
+                      disabled={busy}
+                    >
+                      {busy
+                        ? "Submitting..."
+                        : "Submit feedback"}
+                    </button>
 
                     {error && (
                       <p className="error">{error}</p>
