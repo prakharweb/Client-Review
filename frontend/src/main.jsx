@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
@@ -165,10 +164,8 @@ function App() {
 
       console.log("Feedback submitted:", data);
 
-      // After feedback is saved and the email notification attempt completes,
-      // open the Google review page. The Google review option remains available
-      // for every rating.
-      window.location.assign(googleUrl);
+      // 1-3 star feedback stays private: do NOT open the Google review page.
+      // (Only 4-5 star ratings are sent to Google, from the Submit button.)
 
       if (!data.email_sent) {
         console.warn(
@@ -464,16 +461,18 @@ function App() {
                     </div>
                   )}
 
-                  {/* Google review link available to all customers */}
-                  <a
-                    className="google-button"
-                    href={googleUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ExternalLink size={17} />
-                    Write or view a Google review
-                  </a>
+                  {/* Google review link only for 4-5 star ratings */}
+                  {rating >= 4 && (
+                    <a
+                      className="google-button"
+                      href={googleUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ExternalLink size={17} />
+                      Write a Google review
+                    </a>
+                  )}
 
                   {rating >= 4 ? (
                     <button
