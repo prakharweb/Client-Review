@@ -437,14 +437,14 @@ function App() {
                       <b>Share your honest experience</b>
 
                       <p className="muted">
-                        You can write a public Google review or send
-                        private feedback to our team. Both choices are
-                        available for every rating.
+                        You can write a public Google review or send private
+                        feedback to our team. Both choices are available
+                        for every rating.
                       </p>
                     </div>
                   </div>
 
-                  {/* Both choices remain available for every rating. */}
+                  {/* Google review link available to all customers */}
                   <a
                     className="google-button"
                     href={googleUrl}
@@ -452,7 +452,7 @@ function App() {
                     rel="noopener noreferrer"
                   >
                     <ExternalLink size={17} />
-                    Open Google Review page
+                    Write or view a Google review
                   </a>
 
                   <div className="form-divider">
